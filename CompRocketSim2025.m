@@ -1,8 +1,8 @@
 %% 3-DOF Simulation Environment for 2025 IREC
 
-% Variables
+%% Variables
 
-
+%% Functions
 % Drag Function
 
 
