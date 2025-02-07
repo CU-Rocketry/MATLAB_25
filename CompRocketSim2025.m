@@ -6,9 +6,7 @@
 % Drag Function
 
 
-% Velocity Function
-
-
 % Motor Function
 
 
+% Simulation driver
