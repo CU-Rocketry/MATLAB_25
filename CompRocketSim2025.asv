@@ -8,11 +8,11 @@ motor_prop_mass = 4.766;                % [kg] Mass of prop
 motor_dry_mass = motor_wet_mass - motor_prop_mass;
 
 g = 9.81;                               % [m/s^2] Gravity
-h_fins = 0.105;                         % [m] Fin Height
+h_fins = 0.1016;                        % [m] Fin Height
 t_fins = 0.0047625;                     % [m] Fin Thickness
 N_fins = 4;                             % Number of Fins
 
-pad_altitude = 2871;                    % [m] Midland Air & Space Port Pad Altitude ASL
+pad_altitude = 1400;                    % [m] Spaceport America Pad Altitude MSL
 
 %% Functions
 % Drag Function
