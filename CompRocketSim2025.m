@@ -46,8 +46,7 @@ sim_end_time = 60;
 t = 0;
 
 %% Functions
-<<<<<<< Updated upstream
-=======
+
 %% Drag Function
 drag_curve = readmatrix("drag_curve.csv");
 drag_curve_mach = drag_curve(:,1);
@@ -61,10 +60,10 @@ xlabel("Mach number");
 ylabel("Drag Coefficient");
 
 % D = Cd*0.5*ro*v^2*A
->>>>>>> Stashed changes
 
 %% Motor Function
 motor = motor_generator(dT, motor_fname);
+
 %% Recorder Setup
 
 time = [];
@@ -81,10 +80,6 @@ r_Cd = [];
 r_Fd = [];
 r_Mach = [];
 
-<<<<<<< Updated upstream
-t = 0;
-%% Simulation driver
-=======
 %% Simulation driver
 
 iter = 0;
@@ -138,4 +133,3 @@ while bool_cont
 end
 
 %% Plots
->>>>>>> Stashed changes
