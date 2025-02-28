@@ -30,7 +30,6 @@ drag_curve_drag = drag_curve(:,2);
 
 frontal_area = 0.013439; % [m^2] from RASAero, units converted
 
-
 figure;
 plot(drag_curve_mach, drag_curve_drag);
 xlabel("Mach number");
@@ -39,10 +38,7 @@ ylabel("Drag Coefficient");
 % D=Cd*0.5*ro*v^2*A
 
 %% Motor Function
+motor = motor_generator(dT, motor_fname);
 
-
-<<<<<<< HEAD
-t = 0;
-=======
 %% Simulation driver
->>>>>>> 56a1b439ca50a35697b91c64bda39386359b7929
+>>>>>>>
