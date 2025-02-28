@@ -41,8 +41,5 @@ ylabel("Drag Coefficient");
 %% Motor Function
 
 
-<<<<<<< HEAD
 t = 0;
-=======
 %% Simulation driver
->>>>>>> 56a1b439ca50a35697b91c64bda39386359b7929
