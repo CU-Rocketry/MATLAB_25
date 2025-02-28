@@ -14,6 +14,14 @@ N_fins = 4;                             % Number of Fins
 
 pad_altitude = 2871;                    % [m] Midland Air & Space Port Pad Altitude ASL
 
+%% Simulation Initial Conditions + Parameters
+dT = 0.005;       % [s]
+z = pad_altitude; % [m]
+z_dot = 0;        % [m/s]
+z_dot_dot = 0;    % [m/s^2]
+
+sim_end_time = 60;
+
 %% Functions
 % Drag Function
 drag_curve = readmatrix("drag_curve.csv");
@@ -23,9 +31,9 @@ drag_curve_drag = drag_curve(:,2);
 figure;
 plot(drag_curve_mach, drag_curve_drag);
 xlabel("Mach number");
-ylabel("Drag Coefficient")
+ylabel("Drag Coefficient");
 
 % Motor Function
 
 
-% Simulation driver
+t = 0;
