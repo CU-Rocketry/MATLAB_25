@@ -14,6 +14,28 @@ N_fins = 4;                             % Number of Fins
 
 pad_altitude = 2871;                    % [m] Midland Air & Space Port Pad Altitude ASL
 
+% Drag
+% drag_curve = readmatrix("drag_curve.csv"); % col 1 - mach #, col 2 - Cd
+
+frontal_area = 0.013439; % [m^2] from RASAero, units converted
+rasaero_data = readmatrix("RASAero\RASAero_Non_Extended.xlsx");
+
+max_mach = 3;
+
+cd_curve = [rasaero_data(1:max_mach*100,1),rasaero_data(1:max_mach*100,3)];
+
+figure;
+plot(cd_curve(:,1), cd_curve(:,2));
+xlabel("Mach number");
+ylabel("Drag Coefficient");
+
+coeffs = polyfit(cd_curve(:,1), cd_curve(:,2),10);
+y = polyval(coeffs,cd_curve(:,1));
+figure;
+plot(cd_curve(:,1), y);
+xlabel("Mach number");
+ylabel("Drag Coefficient");
+
 %% Simulation Initial Conditions + Parameters
 dT = 0.005;       % [s]
 z = pad_altitude; % [m]
@@ -23,20 +45,6 @@ z_dot_dot = 0;    % [m/s^2]
 sim_end_time = 60;
 
 %% Functions
-%% Drag Function
-drag_curve = readmatrix("drag_curve.csv");
-drag_curve_mach = drag_curve(:,1);
-drag_curve_drag = drag_curve(:,2);
-
-frontal_area = 0.013439; % [m^2] from RASAero, units converted
-
-
-figure;
-plot(drag_curve_mach, drag_curve_drag);
-xlabel("Mach number");
-ylabel("Drag Coefficient");
-
-% D=Cd*0.5*ro*v^2*A
 
 %% Motor Function
 
