@@ -15,17 +15,22 @@ N_fins = 4;                             % Number of Fins
 pad_altitude = 2871;                    % [m] Midland Air & Space Port Pad Altitude ASL
 
 %% Functions
-% Drag Function
+%% Drag Function
 drag_curve = readmatrix("drag_curve.csv");
 drag_curve_mach = drag_curve(:,1);
 drag_curve_drag = drag_curve(:,2);
+
+frontal_area = 0.013439; % [m^2] from RASAero, units converted
+
 
 figure;
 plot(drag_curve_mach, drag_curve_drag);
 xlabel("Mach number");
 ylabel("Drag Coefficient")
 
-% Motor Function
+% D=Cd*0.5*ro*v^2*A
+
+%% Motor Function
 
 
-% Simulation driver
+%% Simulation driver
