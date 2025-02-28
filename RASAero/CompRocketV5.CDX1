@@ -47,7 +47,7 @@
       <Location>103.315</Location>
       <Color>Black</Color>
     </BoatTail>
-    <Surface>Smooth (Zero Roughness)</Surface>
+    <Surface>Smooth Paint</Surface>
     <CP>0</CP>
     <ModifiedBarrowman>False</ModifiedBarrowman>
     <Turbulence>False</Turbulence>

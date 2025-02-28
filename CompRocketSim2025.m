@@ -23,17 +23,26 @@ z_dot_dot = 0;    % [m/s^2]
 sim_end_time = 60;
 
 %% Functions
-% Drag Function
+%% Drag Function
 drag_curve = readmatrix("drag_curve.csv");
 drag_curve_mach = drag_curve(:,1);
 drag_curve_drag = drag_curve(:,2);
+
+frontal_area = 0.013439; % [m^2] from RASAero, units converted
+
 
 figure;
 plot(drag_curve_mach, drag_curve_drag);
 xlabel("Mach number");
 ylabel("Drag Coefficient");
 
-% Motor Function
+% D=Cd*0.5*ro*v^2*A
+
+%% Motor Function
 
 
+<<<<<<< HEAD
 t = 0;
+=======
+%% Simulation driver
+>>>>>>> 56a1b439ca50a35697b91c64bda39386359b7929
