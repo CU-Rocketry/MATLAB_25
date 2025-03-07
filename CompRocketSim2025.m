@@ -29,12 +29,42 @@ plot(cd_curve(:,1), cd_curve(:,2));
 xlabel("Mach number");
 ylabel("Drag Coefficient");
 
-coeffs = polyfit(cd_curve(:,1), cd_curve(:,2),10);
-y = polyval(coeffs,cd_curve(:,1));
+%% fitting
+% index 1 to 4 quad
+% index 5 to 91 quad
+% index 92 to 105 linear
+% index 106 to end linear
+
+fit1 = polyfit(cd_curve(1:4,1), cd_curve(1:4,2),2);
+fit2 = polyfit(cd_curve(5:91,1), cd_curve(5:91,2),2);
+fit3 = polyfit(cd_curve(92:105,1), cd_curve(92:105,2),1);
+fit4 = polyfit(cd_curve(106:end,1), cd_curve(106:end,2),1);
+
+mach = linspace(0,3,3*1000);
+
+y1 = polyval(fit1,mach);
+y2 = polyval(fit2,mach);
+y3 = polyval(fit3,mach);
+y4 = polyval(fit4,mach);
+
+
+
+
+% coeffs = polyfit(cd_curve(:,1), cd_curve(:,2),10);
+% y = polyval(coeffs,cd_curve(:,1));
 figure;
-plot(cd_curve(:,1), y);
+hold on;
+%plot(cd_curve(:,1), y);
+plot(mach,y1);
+plot(mach,y2);
+plot(mach,y3);
+plot(mach,y4);
+
 xlabel("Mach number");
 ylabel("Drag Coefficient");
+
+xlim([0,1.5])
+ylim([0.4,0.65])
 
 %% Simulation Initial Conditions + Parameters
 dT = 0.005;       % [s]
