@@ -38,17 +38,32 @@ ylabel("Drag Coefficient");
 fit1 = polyfit(cd_curve(1:4,1), cd_curve(1:4,2),2);
 fit2 = polyfit(cd_curve(5:91,1), cd_curve(5:91,2),2);
 fit3 = polyfit(cd_curve(92:105,1), cd_curve(92:105,2),1);
-fit4 = polyfit(cd_curve(106:end,1), cd_curve(106:end,2),1);
+fit4 = polyfit(cd_curve(106:150,1), cd_curve(106:150,2),1);
 
 mach = linspace(0,3,3*1000);
+% 
+% y1 = polyval(fit1,mach);
+% y2 = polyval(fit2,mach);
+% y3 = polyval(fit3,mach);
+% y4 = polyval(fit4,mach);
 
-y1 = polyval(fit1,mach);
-y2 = polyval(fit2,mach);
-y3 = polyval(fit3,mach);
-y4 = polyval(fit4,mach);
+p1 = poly2sym(fit1);
+p2 = poly2sym(fit2);
+p3 = poly2sym(fit3);
+p4 = poly2sym(fit4);
 
+int1 = min(solve(p1 == p2)); % solve where p1=p2, take lower of two
+int2 = min(solve(p2 == p3));
+int3 = solve(p3 == p4);
 
+y = piecewise((x>=0) & (x<int1),p1, (x>=int1) & (x<int2),p2, (x>=int2) & (x<int3),p3, (x>=int3) & (x<2),p4);
 
+figure;
+hold on
+fplot(y)
+xlim([0,2])
+ylim([0.4,0.65])
+plot(cd_curve(:,1), cd_curve(:,2), "o")
 
 % coeffs = polyfit(cd_curve(:,1), cd_curve(:,2),10);
 % y = polyval(coeffs,cd_curve(:,1));
