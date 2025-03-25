@@ -25,10 +25,6 @@ rasaero_data = readmatrix("RASAero\RASAero_Non_Extended.xlsx");
 
 drag_curve = approx_drag_curve(rasaero_data, frontal_area);
 
-% example usage
-f_drag = drag_force(drag_curve,200,frontal_area, 1000); % [N]
-disp("Example drag force: " + f_drag + " [N]");
-
 %% Simulation Initial Conditions + Parameters
 dT = 0.005;       % [s]
 z = pad_altitude; % [m]
