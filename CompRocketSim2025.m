@@ -1,13 +1,18 @@
 %% 3-DOF Simulation Environment for 2025 IREC
 
+clc;
+clear;
+close all;
+
 addpath("RASAero\");
 
 %% Variables
 
+M_dry = 23;                         % [kg] Dry mass of rocket
+
 motor_fname = "AeroTech_M2500T.rse";    %'thrust_curves/AeroTech_M2500T.rse'
 motor_wet_mass = 8.108;                 % [kg] Mass with no fuel
 motor_prop_mass = 4.766;                % [kg] Mass of prop
-motor_burn_time = 3.9;                  % [s] 
 motor_dry_mass = motor_wet_mass - motor_prop_mass;
 
 g = 9.81;                               % [m/s^2] Gravity
@@ -37,22 +42,28 @@ t = 0;
 
 %% Motor Function
 motor = motor_generator(dT, motor_fname);
+time_lookup = motor.time;
+thrust_lookup = motor.thrust_lookup;
+prop_mass_lookup = motor.prop_mass_lookup;
+
+motor_burn_time = max(time_lookup); % [s] Motor burn time
 
 %% Recorder Setup
+preallocate_iter = 10000;
 
-time = [];
-r_z = [];
-r_z_dot = [];
-r_z_dot_dot = [];
-r_T = [];
-r_a = [];
-r_P = [];
-r_M = [];
-r_motor_mass = [];
-r_Th = [];
-r_Cd = [];
-r_Fd = [];
-r_Mach = [];
+time = zeros(1,preallocate_iter);
+r_z = zeros(1,preallocate_iter);
+r_z_dot = zeros(1,preallocate_iter);
+r_z_dot_dot = zeros(1,preallocate_iter);
+r_T = zeros(1,preallocate_iter);
+r_a = zeros(1,preallocate_iter);
+r_P = zeros(1,preallocate_iter);
+r_M = zeros(1,preallocate_iter);
+r_motor_mass = zeros(1,preallocate_iter);
+r_Th = zeros(1,preallocate_iter);
+r_Cd = zeros(1,preallocate_iter);
+r_Fd = zeros(1,preallocate_iter);
+r_Mach = zeros(1,preallocate_iter);
 
 %% Simulation driver
 
@@ -65,6 +76,11 @@ while bool_cont
    t = t + dT;
    iter = iter + 1;
 
+   if(mod(iter, 100) == 0)
+       %disp("Iter: " + iter);
+       disp("t: " + t);
+   end
+
   % Uses International Standard Atmosphere based on launch pad height
   % Returns Temperature (T), speed of sound (a), pressure (P), density (rho)
   % May want to eventually replace; keep for now
@@ -72,7 +88,8 @@ while bool_cont
 
 %% Calculate forces and z_dot_dot
     % Atmospheric Drag
-    Fd = drag_force(drag_curve, z_dot, frontal_area, a, rho);
+    Fd = drag_force(drag_curve, z_dot, frontal_area, a, rho);% gvign nan
+    %disp(Fd)
 
     if z_dot > 0
         % drag is opposite the velocity vector
@@ -101,21 +118,20 @@ while bool_cont
 
 
   %% Log Current Values to the Recorders
-   %{
-   r_z(iter) = ;
-   r_z_dot(iter) = ;
-   r_z_dot_dot(iter) = ;
-   time(iter) = ;
-   r_T(iter) = ;
-   r_a(iter) = ;
-   r_P(iter) = ;
-   r_M(iter) = ;
-   r_motor_mass(iter) = ;
-   r_Th(iter) = ;
-   r_Cd(iter) = ;
-   r_Fd(iter) = ;
-   r_Mach(iter) = ;
-   %}
+   
+   r_z(iter) = z;
+    r_z_dot(iter) = z_dot;
+    r_z_dot_dot(iter) = z_dot_dot;
+    time(iter) = t;
+    r_T(iter) = T;
+    r_a(iter) = a;
+    r_P(iter) = P;
+    r_M(iter) = M;
+    r_motor_mass(iter) = motor_mass;
+    r_Th(iter) = Th;
+    r_Fd(iter) = Fd;
+    r_Mach(iter) = mach;
+   
 
   %% Calculate z and z_dot for the next timestep
     z_dot = z_dot + z_dot_dot * dT;

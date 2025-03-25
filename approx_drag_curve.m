@@ -37,12 +37,14 @@ function drag_curve = approx_drag_curve(rasaero_data, frontal_area)
     int2 = min(solve(p2 == p3));
     int3 = solve(p3 == p4);
     
-    y = piecewise((x>=0) & (x<int1),p1, (x>=int1) & (x<int2),p2, (x>=int2) & (x<int3),p3, (x>=int3) & (x<2),p4);
+    y = piecewise((x<0),0, (x>=0) & (x<int1),p1, (x>=int1) & (x<int2),p2, (x>=int2) & (x<int3),p3, (x>=int3) & (x<2),p4);
     
     % example usage of drag_force:
     % f_drag = drag_force(y,200,frontal_area, a, rho);
     % disp(f_drag);
     
+    % uncomment to plot approximated drag curve
+    %{
     figure;
     hold on;
     plot(cd_curve(:,1), cd_curve(:,2), "r.", "MarkerSize",10); % plot original
@@ -53,6 +55,7 @@ function drag_curve = approx_drag_curve(rasaero_data, frontal_area)
     grid on;
     xlim([0,2]);
     ylim([0.4,0.65]);
+    %}
     
     % coeffs = polyfit(cd_curve(:,1), cd_curve(:,2),10);
     % y = polyval(coeffs,cd_curve(:,1));
