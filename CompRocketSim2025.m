@@ -14,7 +14,7 @@ N_fins = 4;                             % Number of Fins
 
 pad_altitude = 2871;                    % [m] Midland Air & Space Port Pad Altitude ASL
 
-% Drag
+%% Drag
 % drag_curve = readmatrix("drag_curve.csv"); % col 1 - mach #, col 2 - Cd
 
 frontal_area = 0.013439; % [m^2] from RASAero, units converted
@@ -29,7 +29,7 @@ cd_curve = [rasaero_data(1:max_mach*100,1),rasaero_data(1:max_mach*100,3)];
 % xlabel("Mach number");
 % ylabel("Drag Coefficient");
 
-%% fitting
+% Fitting
 % index 1 to 4 quad
 % index 5 to 91 quad
 % index 92 to 105 linear
@@ -70,7 +70,6 @@ ylabel("Drag Coefficient");
 grid on;
 xlim([0,2]);
 ylim([0.4,0.65]);
-
 
 % coeffs = polyfit(cd_curve(:,1), cd_curve(:,2),10);
 % y = polyval(coeffs,cd_curve(:,1));
