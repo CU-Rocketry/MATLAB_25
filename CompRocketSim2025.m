@@ -1,5 +1,7 @@
 %% 3-DOF Simulation Environment for 2025 IREC
 
+addpath("RASAero\");
+
 %% Variables
 
 motor_fname = "AeroTech_M2500T.eng";     %'thrust_curves/AeroTech_M2500T.rse'
