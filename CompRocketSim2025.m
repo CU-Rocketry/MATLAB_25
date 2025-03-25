@@ -34,8 +34,6 @@ z_dot_dot = 0;    % [m/s^2]
 sim_end_time = 60;
 t = 0;
 
-%% Functions
-
 %% Motor Function
 motor = motor_generator(dT, motor_fname);
 
@@ -68,16 +66,40 @@ while bool_cont
 
   % Uses International Standard Atmosphere based on launch pad height
   % Returns Temperature (T), speed of sound (a), pressure (P), density (rho)
+  % May want to eventually replace; keep for now
   [T, a, P, rho] = atmosisa(z);
 
-% Calculate forces and z_dot_dot
-    % Atmospheric drag
-    % Motor Thrust and Mass
-    % Weight
-    % Solve governing eqn for z_dot_dot
-    % Calculate any other additional parameters
+%% Calculate forces and z_dot_dot
+    % Atmospheric Drag
+    Fd = drag_force(drag_curve, z_dot, frontal_area, a, rho);
 
-  % Log Current Values to the Recorders
+    if z_dot > 0
+        % drag is opposite the velocity vector
+        Fd = -1 * Fd;
+    end
+
+    % Motor Thrust and Mass
+    if t >= 0 && t <= motor_burn_time
+        Th = thrust_lookup(iter);
+        motor_mass = prop_mass_lookup(iter) + motor_dry_mass;
+    else
+        Th = 0;
+        motor_mass = motor_dry_mass; %[kg]
+    end
+
+    % Weight
+    M = M_dry + motor_mass;
+    W = M*g;
+
+    % Solve governing eqn for z_dot_dot
+    z_dot_dot = (Th + Fd - W)/M;
+
+    % Calculate any other additional parameters
+    mach = z_dot / a;
+
+
+
+  %% Log Current Values to the Recorders
    %{
    r_z(iter) = ;
    r_z_dot(iter) = ;
@@ -93,11 +115,15 @@ while bool_cont
    r_Fd(iter) = ;
    r_Mach(iter) = ;
    %}
-  
-  % Check for Simulation Events
+
+  %% Calculate z and z_dot for the next timestep
+    z_dot = z_dot + z_dot_dot * dT;
+    z = z + z_dot * dT;
+ 
+  %% Check for Simulation Events
         % if statement for when apogee_reached = true;
 
-  % Evaluate if sim continues
+  %% Evaluate if sim continues
     if (t < sim_end_time && z > 0) || (iter < 5)
         % when sim is good to continue
         bool_cont = true;
@@ -107,4 +133,9 @@ while bool_cont
     end
 end
 
+% Create recorder for AGL altitude
+r_z_agl = r_z - pad_altitude;
+
+
 %% Plots
+disp(r_z_agl(end))
