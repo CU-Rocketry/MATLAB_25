@@ -24,10 +24,10 @@ max_mach = 3;
 
 cd_curve = [rasaero_data(1:max_mach*100,1),rasaero_data(1:max_mach*100,3)];
 
-figure;
-plot(cd_curve(:,1), cd_curve(:,2));
-xlabel("Mach number");
-ylabel("Drag Coefficient");
+% figure;
+% plot(cd_curve(:,1), cd_curve(:,2));
+% xlabel("Mach number");
+% ylabel("Drag Coefficient");
 
 %% fitting
 % index 1 to 4 quad
@@ -47,6 +47,8 @@ mach = linspace(0,3,3*1000);
 % y3 = polyval(fit3,mach);
 % y4 = polyval(fit4,mach);
 
+syms x;
+
 p1 = poly2sym(fit1);
 p2 = poly2sym(fit2);
 p3 = poly2sym(fit3);
@@ -59,27 +61,32 @@ int3 = solve(p3 == p4);
 y = piecewise((x>=0) & (x<int1),p1, (x>=int1) & (x<int2),p2, (x>=int2) & (x<int3),p3, (x>=int3) & (x<2),p4);
 
 figure;
-hold on
-fplot(y)
-xlim([0,2])
-ylim([0.4,0.65])
-plot(cd_curve(:,1), cd_curve(:,2), "o")
+hold on;
+plot(cd_curve(:,1), cd_curve(:,2), "r.", "MarkerSize",10); % plot original
+fplot(y,'b', "LineWidth",1); % plot regression
+legend("Original", "Regression");
+xlabel("Mach number");
+ylabel("Drag Coefficient");
+grid on;
+xlim([0,2]);
+ylim([0.4,0.65]);
+
 
 % coeffs = polyfit(cd_curve(:,1), cd_curve(:,2),10);
 % y = polyval(coeffs,cd_curve(:,1));
-figure;
-hold on;
+% figure;
+% hold on;
 %plot(cd_curve(:,1), y);
-plot(mach,y1);
-plot(mach,y2);
-plot(mach,y3);
-plot(mach,y4);
+% plot(mach,y1);
+% plot(mach,y2);
+% plot(mach,y3);
+% plot(mach,y4);
 
-xlabel("Mach number");
-ylabel("Drag Coefficient");
-
-xlim([0,1.5])
-ylim([0.4,0.65])
+% xlabel("Mach number");
+% ylabel("Drag Coefficient");
+% 
+% xlim([0,1.5])
+% ylim([0.4,0.65])
 
 %% Simulation Initial Conditions + Parameters
 dT = 0.005;       % [s]
@@ -91,20 +98,6 @@ sim_end_time = 60;
 t = 0;
 
 %% Functions
-
-%% Drag Function
-drag_curve = readmatrix("drag_curve.csv");
-drag_curve_mach = drag_curve(:,1);
-drag_curve_drag = drag_curve(:,2);
-
-frontal_area = 0.013439; % [m^2] from RASAero, units converted
-
-figure;
-plot(drag_curve_mach, drag_curve_drag);
-xlabel("Mach number");
-ylabel("Drag Coefficient");
-
-% D = Cd*0.5*ro*v^2*A
 
 %% Motor Function
 motor = motor_generator(dT, motor_fname);
