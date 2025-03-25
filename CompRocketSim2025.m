@@ -70,7 +70,7 @@ while bool_cont
 
   % Uses International Standard Atmosphere based on launch pad height
   % Returns Temperature (T), speed of sound (a), pressure (P), density (rho)
-    [T, a, P, rho] = atmosisa(z); 
+  [T, a, P, rho] = atmosisa(z);
 
 % Calculate forces and z_dot_dot
     % Atmospheric drag

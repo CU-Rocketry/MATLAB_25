@@ -3,9 +3,7 @@
 %   - velocity: rocket's velocity, assuming into airstream
 %   - frontal area: wetted area of the rocket based on RASAero
 %   - altitude: meters
-function f_drag = drag_force(drag_curve, velocity, frontal_area, altitude)
-    [T, a, P, rho] = atmosisa(altitude);
-
+function f_drag = drag_force(drag_curve, velocity, frontal_area, a, rho)
     mach = velocity / a; % convert [m/s] to mach number based on atmosphere
     
     syms x;

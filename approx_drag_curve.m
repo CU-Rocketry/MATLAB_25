@@ -40,7 +40,7 @@ function drag_curve = approx_drag_curve(rasaero_data, frontal_area)
     y = piecewise((x>=0) & (x<int1),p1, (x>=int1) & (x<int2),p2, (x>=int2) & (x<int3),p3, (x>=int3) & (x<2),p4);
     
     % example usage of drag_force:
-    % f_drag = drag_force(y,200,frontal_area, 1000);
+    % f_drag = drag_force(y,200,frontal_area, a, rho);
     % disp(f_drag);
     
     figure;
