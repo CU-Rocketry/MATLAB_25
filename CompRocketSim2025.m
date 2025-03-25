@@ -4,9 +4,10 @@ addpath("RASAero\");
 
 %% Variables
 
-motor_fname = "AeroTech_M2500T.rse";     %'thrust_curves/AeroTech_M2500T.rse'
+motor_fname = "AeroTech_M2500T.rse";    %'thrust_curves/AeroTech_M2500T.rse'
 motor_wet_mass = 8.108;                 % [kg] Mass with no fuel
 motor_prop_mass = 4.766;                % [kg] Mass of prop
+motor_burn_time = 3.9;                  % [s] 
 motor_dry_mass = motor_wet_mass - motor_prop_mass;
 
 g = 9.81;                               % [m/s^2] Gravity
