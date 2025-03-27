@@ -49,9 +49,9 @@ prop_mass_lookup = motor.prop_mass_lookup;
 motor_burn_time = max(time_lookup); % [s] Motor burn time
 
 %% Recorder Setup
-preallocate_iter = 10000;
+preallocate_iter = sim_end_time / dT;
 
-time = zeros(1,preallocate_iter);
+r_time = zeros(1,preallocate_iter);
 r_z = zeros(1,preallocate_iter);
 r_z_dot = zeros(1,preallocate_iter);
 r_z_dot_dot = zeros(1,preallocate_iter);
@@ -76,10 +76,12 @@ while bool_cont
    t = t + dT;
    iter = iter + 1;
 
-   if(mod(iter, 100) == 0)
-       %disp("Iter: " + iter);
-       disp("t: " + t);
-   end
+   % if(mod(iter, 100) == 0)
+   %     %disp("Iter: " + iter);
+   %     disp("t: " + t);
+   % end
+
+   %disp("Iter: " + iter + " t: " + t);
 
   % Uses International Standard Atmosphere based on launch pad height
   % Returns Temperature (T), speed of sound (a), pressure (P), density (rho)
@@ -115,14 +117,12 @@ while bool_cont
     % Calculate any other additional parameters
     mach = z_dot / a;
 
-
-
   %% Log Current Values to the Recorders
-   
-   r_z(iter) = z;
+    
+    r_time(iter) = t;
+    r_z(iter) = z;
     r_z_dot(iter) = z_dot;
     r_z_dot_dot(iter) = z_dot_dot;
-    time(iter) = t;
     r_T(iter) = T;
     r_a(iter) = a;
     r_P(iter) = P;
@@ -141,11 +141,13 @@ while bool_cont
         % if statement for when apogee_reached = true;
 
   %% Evaluate if sim continues
-    if (t < sim_end_time && z > 0) || (iter < 5)
+    if (t < sim_end_time && z >= pad_altitude) || (iter < 10)
         % when sim is good to continue
         bool_cont = true;
     else
         % end sim
+        disp("Sim ended at iter=" + iter + " t=" + t + " z=" + z + " vs. pad alt: " + pad_altitude);
+        disp(z)
         bool_cont = false;
     end
 end
@@ -153,6 +155,46 @@ end
 % Create recorder for AGL altitude
 r_z_agl = r_z - pad_altitude;
 
+% trim preallocation
+r_time = r_time(1:iter);
+r_z = r_z(1:iter);
+r_z_dot = r_z_dot(1:iter);
+r_z_dot_dot = r_z_dot_dot(1:iter);
+r_T = r_T(1:iter);
+r_a = r_a(1:iter);
+r_P = r_P(1:iter);
+r_M = r_M(1:iter);
+r_motor_mass = r_motor_mass(1:iter);
+r_Th = r_Th(1:iter);
+r_Fd = r_Fd(1:iter);
+r_Mach = r_Mach(1:iter);
+r_z_agl = r_z_agl(1:iter);
 
 %% Plots
-disp(r_z_agl(end))
+
+fig_transform = figure;
+set(fig_transform, 'Units', 'Normalized', 'OuterPosition', [0, 0.25, 0.5, 0.75]);
+
+subplot(3,1,1);
+% plot(r_time, r_z); % ASL altitude
+plot(r_time, r_z_agl);
+title("Altitude vs Time");
+xlabel("Time [s]");
+ylabel("Altitude [m]");
+grid on;
+
+subplot(3,1,2); 
+plot(r_time, r_z_dot);
+title("Vertical Velocity vs Time");
+xlabel("Time [s]");
+ylabel("Velocity [m/s]");
+yline(0,'k');
+grid on;
+
+subplot(3,1,3); 
+plot(r_time, r_z_dot_dot);
+title("Vertical Acceleration vs Time");
+xlabel("Time [s]");
+ylabel("Acceleration [m/s^2]");
+yline(0,'k');
+grid on;
