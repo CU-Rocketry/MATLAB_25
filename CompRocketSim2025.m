@@ -76,7 +76,7 @@ while bool_cont
    t = t + dT;
    iter = iter + 1;
 
-   % if(mod(iter, 100) == 0)
+   % if(mod(iter, 200) == 0)
    %     %disp("Iter: " + iter);
    %     disp("t: " + t);
    % end
@@ -86,7 +86,11 @@ while bool_cont
   % Uses International Standard Atmosphere based on launch pad height
   % Returns Temperature (T), speed of sound (a), pressure (P), density (rho)
   % May want to eventually replace; keep for now
-  [T, a, P, rho] = atmosisa(z);
+
+  % [T, a, P, rho] = atmosisa(z);
+  % disp([T, a, P, rho]);
+  [rho, a, T, P] = stdatmo(z);
+  % disp([T, a, P, rho]);
 
 %% Calculate forces and z_dot_dot
     % Atmospheric Drag
