@@ -225,3 +225,14 @@ z_dot_max_idx = find(r_z_dot==z_dot_max);
 z_dot_max_t = r_time(z_dot_max_idx);
 z_dot_agl_max = max(r_z_dot);
 disp("Max Velocity of " + z_dot_max + " [m/s] at t = " + z_dot_max_t + " [s] ");
+
+%% Event Detection 
+
+% Apogee / Drogue Deploy
+% Launch
+% Launch Rail Departure
+% Burnout
+% Main Deploy
+
+
+
