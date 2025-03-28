@@ -216,3 +216,5 @@ disp("Apogee (AGL) = " + z_agl_max + " [m]");
 % launch rail departure (t, z_dot)
 % burnout (t, z, z_agl, z_dot)
 % apogee (t, z, z_agl)
+
+% maximums (z_dot, mach)
