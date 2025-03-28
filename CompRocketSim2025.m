@@ -208,7 +208,11 @@ grid on;
 
 %% Flight summary
 
-% initial condition (z, z_agl, z_dot)
+% Initial Conditions (z,z_agl, z_dot)
+z_0 = r_z(1) % Inital Value of z
+z_agl_0 = r_z_agl(1) % Initial Value of z_agl
+z_dot_0 = z_dot(1) % Initial Value of z_dot
+
 % launch rail departure (t, z_dot)
 past_rail = r_z_agl(:) >= rail_length;
 past_rail_idx = find(past_rail==1,1,"first");
@@ -230,14 +234,3 @@ z_dot_max_idx = find(r_z_dot==z_dot_max);
 z_dot_max_t = r_time(z_dot_max_idx);
 z_dot_agl_max = max(r_z_dot);
 disp("Max Velocity of " + z_dot_max + " [m/s] at t = " + z_dot_max_t + " [s] ");
-
-%% Event Detection 
-
-% Apogee / Drogue Deploy
-% Launch
-% Launch Rail Departure
-% Burnout
-% Main Deploy
-
-
-
