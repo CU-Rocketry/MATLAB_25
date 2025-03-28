@@ -208,13 +208,15 @@ grid on;
 
 %% Flight summary
 
-% max altitude
-z_agl_max = max(r_z_agl);
-disp("Apogee (AGL) = " + z_agl_max + " [m]");
-
 % initial condition (z, z_agl, z_dot)
 % launch rail departure (t, z_dot)
 % burnout (t, z, z_agl, z_dot)
+
 % apogee (t, z, z_agl)
+z_max = max(r_z);
+z_max_idx = find(r_z==z_max);
+z_max_t = r_time(z_max_idx);
+z_agl_max = max(r_z_agl);
+disp("Apogee of " + z_max + " [m] ASL (" + z_agl_max + " [m] AGL) at t = " + z_max_t + " [s] ");
 
 % maximums (z_dot, mach)
