@@ -24,6 +24,9 @@ pad_altitude = 2871;                    % [m] Midland Air & Space Port Pad Altit
 
 frontal_area = 0.013439; % [m^2] from RASAero, units converted
 
+rail_length = 5.6; % [m]
+rail_angle = 5; % [degrees] angle off of vertical
+
 %% Drag
 % drag_curve = readmatrix("drag_curve.csv"); % col 1 - mach #, col 2 - Cd
 
