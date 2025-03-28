@@ -211,3 +211,8 @@ grid on;
 % max altitude
 z_agl_max = max(r_z_agl);
 disp("Apogee (AGL) = " + z_agl_max + " [m]");
+
+% initial condition (z, z_agl, z_dot)
+% launch rail departure (t, z_dot)
+% burnout (t, z, z_agl, z_dot)
+% apogee (t, z, z_agl)
