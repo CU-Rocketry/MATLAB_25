@@ -218,3 +218,5 @@ disp("Apogee (AGL) = " + z_agl_max + " [m]");
 % apogee (t, z, z_agl)
 
 % maximums (z_dot, mach)
+z_dot_max = max(r_z_dot);
+z_dot_max_idx = find(r_z_dot==z_dot_max);
