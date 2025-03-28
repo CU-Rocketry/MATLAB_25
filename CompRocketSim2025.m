@@ -210,6 +210,11 @@ grid on;
 
 % initial condition (z, z_agl, z_dot)
 % launch rail departure (t, z_dot)
+past_rail = r_z_agl(:) >= rail_length;
+past_rail_idx = find(past_rail==1,1,"first");
+past_rail_time = r_time(past_rail_idx);
+past_rail_z_dot = r_z_dot(past_rail_idx);
+disp("Clears Rail at " + past_rail_time + " [s] at speed " + past_rail_z_dot + " [m/s]")
 % burnout (t, z, z_agl, z_dot)
 
 % apogee (t, z, z_agl)
