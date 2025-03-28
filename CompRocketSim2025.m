@@ -71,6 +71,8 @@ iter = 0;
 bool_cont = true;
 apogee_reached = false;
 
+disp("Sim started");
+
 while bool_cont
    % Calcuate Properties at Simulation Time
    t = t + dT;
@@ -81,7 +83,6 @@ while bool_cont
    %     disp("t: " + t);
    % end
 
-   %disp("Iter: " + iter + " t: " + t);
 
   % Uses International Standard Atmosphere based on launch pad height
   % Returns Temperature (T), speed of sound (a), pressure (P), density (rho)
@@ -151,7 +152,6 @@ while bool_cont
     else
         % end sim
         disp("Sim ended at iter=" + iter + " t=" + t + " z=" + z + " vs. pad alt: " + pad_altitude);
-        disp(z)
         bool_cont = false;
     end
 end
