@@ -198,3 +198,9 @@ xlabel("Time [s]");
 ylabel("Acceleration [m/s^2]");
 yline(0,'k');
 grid on;
+
+%% Flight summary
+
+% max altitude
+z_agl_max = max(r_z_agl);
+disp("Apogee (AGL) = " + z_agl_max + " [m]");
