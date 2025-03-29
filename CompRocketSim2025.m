@@ -209,9 +209,9 @@ grid on;
 %% Flight summary
 
 % Initial Conditions (z,z_agl, z_dot)
-z_0 = r_z(1) % Inital Value of z
-z_agl_0 = r_z_agl(1) % Initial Value of z_agl
-z_dot_0 = z_dot(1) % Initial Value of z_dot
+z_0 = r_z(1); % Inital Value of z
+z_agl_0 = r_z_agl(1); % Initial Value of z_agl
+z_dot_0 = z_dot(1); % Initial Value of z_dot
 
 % launch rail departure (t, z_dot)
 past_rail = r_z_agl(:) >= rail_length;
@@ -219,7 +219,14 @@ past_rail_idx = find(past_rail==1,1,"first");
 past_rail_time = r_time(past_rail_idx);
 past_rail_z_dot = r_z_dot(past_rail_idx);
 disp("Clears Rail at " + past_rail_time + " [s] at speed " + past_rail_z_dot + " [m/s]")
+
 % burnout (t, z, z_agl, z_dot)
+burnout_idx = find(r_time >= motor_burn_time, 1, "first");
+burnout_t = r_time(burnout_idx);
+burnout_z = r_z(burnout_idx);
+burnout_z_agl = r_z_agl(burnout_idx);
+burnout_z_dot = r_z_dot(burnout_idx);
+disp("Burnout occurs at " + burnout_t + " [s], Altitude = " + burnout_z + " [m] ASL (" + burnout_z_agl + "[m] AGL) and Velocity = " + burnout_z_dot + " [m/s]");
 
 % apogee (t, z, z_agl)
 z_max = max(r_z);
