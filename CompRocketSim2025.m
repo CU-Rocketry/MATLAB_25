@@ -226,7 +226,7 @@ burnout_t = r_time(burnout_idx);
 burnout_z = r_z(burnout_idx);
 burnout_z_agl = r_z_agl(burnout_idx);
 burnout_z_dot = r_z_dot(burnout_idx);
-disp("Burnout occurs at " + burnout_t + " [s], Altitude = " + burnout_z + " [m] ASL (" + burnout_z_agl + "[m] AGL) and Velocity = " + burnout_z_dot + " [m/s]");
+disp("Burnout occurs at " + burnout_t + " [s] when Altitude = " + burnout_z + " [m] ASL (" + burnout_z_agl + " [m] AGL) and Velocity = " + burnout_z_dot + " [m/s]");
 
 % apogee (t, z, z_agl)
 z_max = max(r_z);
