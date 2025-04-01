@@ -164,6 +164,10 @@ while bool_cont
         % burnout
 
         % apogee
+        if (z_dot <= 0) && (~event_apogee) && (event_launch_rail_departure == true)
+            event_apogee = true;
+            disp("Apogee at t " + t);
+        end
         
         % main deployment
 
