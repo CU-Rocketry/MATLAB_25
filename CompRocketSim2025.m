@@ -162,6 +162,10 @@ while bool_cont
         end
 
         % burnout
+        if (t >= motor_burn_time) && ~event_burnout
+            event_burnout = true;
+            disp("Motor burnout at t=" + t);
+        end
 
         % apogee
         
