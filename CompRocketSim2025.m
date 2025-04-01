@@ -166,6 +166,10 @@ while bool_cont
         % apogee
         
         % main deployment
+        if (event_apogee && (z + pad_altitude) <= 304.8)
+            event_main_deploy = true;
+            disp("Main deployment at t=" + t);
+        end
 
     else
         % end sim
