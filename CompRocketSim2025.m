@@ -227,6 +227,8 @@ grid on;
 
 %% Flight summary
 
+disp("Flight summary")
+
 % Initial Conditions (z,z_agl, z_dot)
 z_0 = r_z(1); % Inital Value of z
 z_agl_0 = r_z_agl(1); % Initial Value of z_agl
