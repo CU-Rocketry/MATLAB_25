@@ -72,7 +72,6 @@ r_Mach = zeros(1,preallocate_iter);
 
 iter = 0;
 bool_cont = true;
-apogee_reached = false;
 
 disp("Sim started");
 
@@ -144,14 +143,20 @@ while bool_cont
   %% Calculate z and z_dot for the next timestep
     z_dot = z_dot + z_dot_dot * dT;
     z = z + z_dot * dT;
- 
-  %% Check for Simulation Events
-        % if statement for when apogee_reached = true;
 
-  %% Evaluate if sim continues
-    if (t < sim_end_time && z >= pad_altitude) || (iter < 10)
+  %% Check for simulation events
+    if (t < sim_end_time && z >= pad_altitude) || (iter < 10) % simulation continues
         % when sim is good to continue
         bool_cont = true;
+    
+        % launch rail departure
+
+        % burnout
+
+        % apogee
+        
+        % main deployment
+
     else
         % end sim
         disp("Sim ended at iter=" + iter + " t=" + t + " z=" + z + " vs. pad alt: " + pad_altitude);
