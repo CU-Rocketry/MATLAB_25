@@ -168,13 +168,13 @@ while bool_cont
         end
 
         % apogee
-        if (z_dot <= 0) && (~event_apogee) && (event_launch_rail_departure == true)
+        if (z_dot <= 0) && (~event_apogee) && (event_launch_rail_departure)
             event_apogee = true;
             disp("Apogee at t = " + t);
         end
         
         % main deployment
-        if (event_apogee && (z - pad_altitude) <= 304.8)
+        if (event_apogee && (z - pad_altitude) <= 304.8) && ~event_main_deploy
             event_main_deploy = true;
             disp("Main deployment at t=" + t);
         end
