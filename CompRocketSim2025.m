@@ -73,6 +73,12 @@ r_Mach = zeros(1,preallocate_iter);
 iter = 0;
 bool_cont = true;
 
+% Event booleans
+event_launch_rail_departure = false;
+event_burnout = false;
+event_apogee = false;
+event_main_deploy = false;
+
 disp("Sim started");
 
 while bool_cont
@@ -150,6 +156,10 @@ while bool_cont
         bool_cont = true;
     
         % launch rail departure
+        if (z >= pad_altitude + rail_length) && ~event_launch_rail_departure
+            event_launch_rail_departure = true;
+            disp("Launch rail departure at t=" + t);
+        end
 
         % burnout
 
