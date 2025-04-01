@@ -158,12 +158,20 @@ while bool_cont
         % launch rail departure
         if (z >= pad_altitude + rail_length) && ~event_launch_rail_departure
             event_launch_rail_departure = true;
-            disp("Launch rail departure at t=" + t);
+            disp("Launch rail departure at t = " + t);
         end
 
         % burnout
+        if (t >= motor_burn_time) && ~event_burnout
+            event_burnout = true;
+            disp("Motor burnout at t = " + t);
+        end
 
         % apogee
+        if (z_dot <= 0) && (~event_apogee) && (event_launch_rail_departure == true)
+            event_apogee = true;
+            disp("Apogee at t = " + t);
+        end
         
         % main deployment
         if (event_apogee && (z + pad_altitude) <= 304.8)
@@ -173,7 +181,7 @@ while bool_cont
 
     else
         % end sim
-        disp("Sim ended at iter=" + iter + " t=" + t + " z=" + z + " vs. pad alt: " + pad_altitude);
+        disp("Sim ended at iter = " + iter + " t = " + t + " z = " + z + " vs. pad alt: " + pad_altitude);
         bool_cont = false;
     end
 end
@@ -226,6 +234,8 @@ yline(0,'k');
 grid on;
 
 %% Flight summary
+
+disp("Flight summary")
 
 % Initial Conditions (z,z_agl, z_dot)
 z_0 = r_z(1); % Inital Value of z
