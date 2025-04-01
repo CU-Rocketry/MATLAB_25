@@ -162,6 +162,10 @@ while bool_cont
         end
 
         % burnout
+        if (t >= motor_burn_time) && ~event_burnout
+            event_burnout = true;
+            disp("Motor burnout at t=" + t);
+        end
 
         % apogee
         if (z_dot <= 0) && (~event_apogee) && (event_launch_rail_departure == true)
@@ -226,6 +230,8 @@ yline(0,'k');
 grid on;
 
 %% Flight summary
+
+disp("Flight summary")
 
 % Initial Conditions (z,z_agl, z_dot)
 z_0 = r_z(1); % Inital Value of z
