@@ -36,12 +36,12 @@ drag_curve = approx_drag_curve(rasaero_data, frontal_area);
 
 %% Simulation Initial Conditions + Parameters
 dT = 0.005;       % [s]
-z = pad_altitude; % [m]
-z_dot = 0;        % [m/s]
-z_dot_dot = 0;    % [m/s^2]
-s = 0;            % [m] relative to launch site
-s_dot = 0;        % [m/s]
-s_dot_dot = 0;    % [m/s^2]
+
+% position vector [z, s] represents altitude, downrange
+% initial conditions
+position = [pad_altitude, 0]; % [m]
+velocity = [0, 0]; % [m/s]
+acceleration = [0, 0]; % [m/s]
 
 sim_end_time = 60;
 t = 0;
@@ -107,9 +107,12 @@ while bool_cont
   [rho, a, T, P] = stdatmo(z);
   % disp([T, a, P, rho]);
 
+  speed = norm(velocity);
+  direction = velocity ./ speed;
+
 %% Calculate forces and z_dot_dot
     % Atmospheric Drag
-    Fd = drag_force(drag_curve, z_dot, frontal_area, a, rho);% gvign nan
+    Fd = drag_force(drag_curve, speed, frontal_area, a, rho);% gvign nan
     %disp(Fd)
 
     if z_dot > 0
