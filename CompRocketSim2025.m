@@ -135,17 +135,17 @@ while bool_cont
     z_dot_dot = (Th + Fd - W)/M;
 
     % Calculate any other additional parameters
-    mach = z_dot / a;
+    mach = speed / a;
 
   %% Log Current Values to the Recorders
     
     r_time(iter) = t;
-    r_z(iter) = z;
-    r_z_dot(iter) = z_dot;
-    r_z_dot_dot(iter) = z_dot_dot;
-    r_s(iter) = s;
-    r_s_dot(iter) = s_dot;
-    r_s_dot_dot(iter) = s_dot_dot;
+    r_z(iter) = position(1);
+    r_z_dot(iter) = velocity(1);
+    r_z_dot_dot(iter) = acceleration(1);
+    r_s(iter) = position(2);
+    r_s_dot(iter) = velocity(2);
+    r_s_dot_dot(iter) = acceleration(2);
     r_T(iter) = T;
     r_a(iter) = a;
     r_P(iter) = P;
@@ -157,8 +157,12 @@ while bool_cont
    
 
   %% Calculate z and z_dot for the next timestep
-    z_dot = z_dot + z_dot_dot * dT;
-    z = z + z_dot * dT;
+    %z_dot = z_dot + z_dot_dot * dT;
+    %z = z + z_dot * dT;
+    
+    velocity = velocity + acceleration * dT;
+    position = position + velocity * dT;
+
 
   %% Check for simulation events
     if (t < sim_end_time && z >= pad_altitude) || (iter < 10) % simulation continues
