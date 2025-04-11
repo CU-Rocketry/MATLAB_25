@@ -39,6 +39,9 @@ dT = 0.005;       % [s]
 z = pad_altitude; % [m]
 z_dot = 0;        % [m/s]
 z_dot_dot = 0;    % [m/s^2]
+s = 0;            % [m] relative to launch site
+s_dot = 0;        % [m/s]
+s_dot_dot = 0;    % [m/s^2]
 
 sim_end_time = 60;
 t = 0;
