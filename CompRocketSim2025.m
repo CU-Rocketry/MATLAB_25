@@ -135,9 +135,11 @@ while bool_cont
         motor_mass = motor_dry_mass; %[kg]
     end
 
+    Th = Th*direction;
+
     % Weight
     M = M_dry + motor_mass;
-    W = (M*g)*direction;
+    W = (M*g)*[1,0];
 
     % Solve governing eqn for z_dot_dot
     acceleration = (Th + Fd - W)/M;
@@ -159,7 +161,7 @@ while bool_cont
     r_P(iter) = P;
     r_M(iter) = M;
     r_motor_mass(iter) = motor_mass;
-    r_Th(iter) = Th;
+    r_Th(iter) = norm(Th);
     r_Fd(iter) = norm(Fd);
     r_Mach(iter) = mach;
    
@@ -178,7 +180,7 @@ while bool_cont
         bool_cont = true;
     
         % launch rail departure
-        if (position(1) >= pad_altitude + rail_length) && ~event_launch_rail_departure
+        if (norm(position) >= rail_length) && ~event_launch_rail_departure
             event_launch_rail_departure = true;
             disp("Launch rail departure at t = " + t);
         end
@@ -290,7 +292,7 @@ disp("Flight summary")
 % Initial Conditions (z,z_agl, z_dot)
 z_0 = r_z(1); % Inital Value of z
 z_agl_0 = r_z_asl(1); % Initial Value of z_agl
-z_dot_0 = z_dot(1); % Initial Value of z_dot
+z_dot_0 = r_z_dot(1); % Initial Value of z_dot
 
 % launch rail departure (t, z_dot)
 past_rail = r_z_asl(:) >= rail_length;
