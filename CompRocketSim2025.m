@@ -140,7 +140,7 @@ while bool_cont
     W = (M*g)*direction;
 
     % Solve governing eqn for z_dot_dot
-    acceleration = (Th(1) + Fd(1) - W(1))/M;
+    acceleration = (Th + Fd - W)/M;
 
     % Calculate any other additional parameters
     mach = speed / a;
@@ -160,7 +160,7 @@ while bool_cont
     r_M(iter) = M;
     r_motor_mass(iter) = motor_mass;
     r_Th(iter) = Th;
-    r_Fd(iter) = Fd;
+    r_Fd(iter) = norm(Fd);
     r_Mach(iter) = mach;
    
 
@@ -173,12 +173,12 @@ while bool_cont
 
 
   %% Check for simulation events
-    if (t < sim_end_time && z >= pad_altitude) || (iter < 10) % simulation continues
+    if (t < sim_end_time && position(1) >= 0) || (iter < 10) % simulation continues
         % when sim is good to continue
         bool_cont = true;
     
         % launch rail departure
-        if (z >= pad_altitude + rail_length) && ~event_launch_rail_departure
+        if (position(1) >= pad_altitude + rail_length) && ~event_launch_rail_departure
             event_launch_rail_departure = true;
             disp("Launch rail departure at t = " + t);
         end
@@ -190,20 +190,20 @@ while bool_cont
         end
 
         % apogee
-        if (z_dot <= 0) && (~event_apogee) && (event_launch_rail_departure)
+        if (velocity(1) <= 0) && (~event_apogee) && (event_launch_rail_departure)
             event_apogee = true;
             disp("Apogee at t = " + t);
         end
         
         % main deployment
-        if (event_apogee && (z - pad_altitude) <= 304.8) && ~event_main_deploy
+        if (event_apogee && (position(1) - pad_altitude) <= 304.8) && ~event_main_deploy
             event_main_deploy = true;
             disp("Main deployment at t=" + t);
         end
 
     else
         % end sim
-        disp("Sim ended at iter = " + iter + " t = " + t + " z = " + z + " vs. pad alt: " + pad_altitude);
+        disp("Sim ended at iter = " + iter + " t = " + t + " z = " + position(1) + " vs. pad alt: " + pad_altitude);
         bool_cont = false;
     end
 end
@@ -253,6 +253,31 @@ grid on;
 subplot(3,1,3); 
 plot(r_time, r_z_dot_dot);
 title("Vertical Acceleration vs Time");
+xlabel("Time [s]");
+ylabel("Acceleration [m/s^2]");
+yline(0,'k');
+grid on;
+
+figure(2)
+subplot(3,1,1);
+plot(r_time, r_s); % AGL altitude
+% plot(r_time, r_z_asl); % ASL altitude
+title("Downrange Distance vs Time");
+xlabel("Time [s]");
+ylabel("Altitude [m]");
+grid on;
+
+subplot(3,1,2); 
+plot(r_time, r_s_dot);
+title("Horiziontal Velocity vs Time");
+xlabel("Time [s]");
+ylabel("Velocity [m/s]");
+yline(0,'k');
+grid on;
+
+subplot(3,1,3); 
+plot(r_time, r_s_dot_dot);
+title("Horiziontal Acceleration vs Time");
 xlabel("Time [s]");
 ylabel("Acceleration [m/s^2]");
 yline(0,'k');
