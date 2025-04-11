@@ -140,7 +140,7 @@ while bool_cont
     W = (M*g)*direction;
 
     % Solve governing eqn for z_dot_dot
-    acceleration = (Th(1) + Fd(1) - W(1))./M;
+    acceleration = (Th(1) + Fd(1) - W(1))/M;
 
     % Calculate any other additional parameters
     mach = speed / a;
