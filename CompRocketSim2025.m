@@ -26,6 +26,7 @@ frontal_area = 0.013439; % [m^2] from RASAero, units converted
 
 rail_length = 5.6; % [m]
 rail_angle = 5; % [degrees] angle off of vertical
+rail_angle_horizontal = deg2rad(90 - rail_angle); % [rad] angle off of horizontal
 
 %% Drag
 % drag_curve = readmatrix("drag_curve.csv"); % col 1 - mach #, col 2 - Cd
@@ -39,7 +40,7 @@ dT = 0.005;       % [s]
 
 % position vector [z, s] represents altitude, downrange
 % initial conditions
-position = [pad_altitude, 0]; % [m]
+position = [0, 0]; % [m] AGL, downrange
 velocity = [0, 0]; % [m/s]
 acceleration = [0, 0]; % [m/s]
 
@@ -104,7 +105,7 @@ while bool_cont
 
   % [T, a, P, rho] = atmosisa(z);
   % disp([T, a, P, rho]);
-  [rho, a, T, P] = stdatmo(z);
+  [rho, a, T, P] = stdatmo(position(1) + pad_altitude);
   % disp([T, a, P, rho]);
 
   speed = norm(velocity);
@@ -208,7 +209,7 @@ while bool_cont
 end
 
 % Create recorder for AGL altitude
-r_z_agl = r_z - pad_altitude;
+r_z_asl = r_z + pad_altitude;
 
 % trim preallocation
 r_time = r_time(1:iter);
@@ -226,7 +227,7 @@ r_motor_mass = r_motor_mass(1:iter);
 r_Th = r_Th(1:iter);
 r_Fd = r_Fd(1:iter);
 r_Mach = r_Mach(1:iter);
-r_z_agl = r_z_agl(1:iter);
+r_z_asl = r_z_asl(1:iter);
 
 %% Plots
 
@@ -234,8 +235,8 @@ fig_transform = figure;
 set(fig_transform, 'Units', 'Normalized', 'OuterPosition', [0, 0.25, 0.5, 0.75]);
 
 subplot(3,1,1);
-% plot(r_time, r_z); % ASL altitude
-plot(r_time, r_z_agl);
+plot(r_time, r_z); % AGL altitude
+% plot(r_time, r_z_asl); % ASL altitude
 title("Altitude vs Time");
 xlabel("Time [s]");
 ylabel("Altitude [m]");
@@ -263,11 +264,11 @@ disp("Flight summary")
 
 % Initial Conditions (z,z_agl, z_dot)
 z_0 = r_z(1); % Inital Value of z
-z_agl_0 = r_z_agl(1); % Initial Value of z_agl
+z_agl_0 = r_z_asl(1); % Initial Value of z_agl
 z_dot_0 = z_dot(1); % Initial Value of z_dot
 
 % launch rail departure (t, z_dot)
-past_rail = r_z_agl(:) >= rail_length;
+past_rail = r_z_asl(:) >= rail_length;
 past_rail_idx = find(past_rail==1,1,"first");
 past_rail_time = r_time(past_rail_idx);
 past_rail_z_dot = r_z_dot(past_rail_idx);
@@ -277,7 +278,7 @@ disp("Clears Rail at " + past_rail_time + " [s] at speed " + past_rail_z_dot + "
 burnout_idx = find(r_time >= motor_burn_time, 1, "first");
 burnout_t = r_time(burnout_idx);
 burnout_z = r_z(burnout_idx);
-burnout_z_agl = r_z_agl(burnout_idx);
+burnout_z_agl = r_z_asl(burnout_idx);
 burnout_z_dot = r_z_dot(burnout_idx);
 disp("Burnout occurs at " + burnout_t + " [s] when Altitude = " + burnout_z + " [m] ASL (" + burnout_z_agl + " [m] AGL) and Velocity = " + burnout_z_dot + " [m/s]");
 
@@ -285,12 +286,11 @@ disp("Burnout occurs at " + burnout_t + " [s] when Altitude = " + burnout_z + " 
 z_max = max(r_z);
 z_max_idx = find(r_z==z_max);
 z_max_t = r_time(z_max_idx);
-z_agl_max = max(r_z_agl);
-disp("Apogee of " + z_max + " [m] ASL (" + z_agl_max + " [m] AGL) at t = " + z_max_t + " [s] ");
+z_asl_max = max(r_z_asl);
+disp("Apogee of " + z_max + " [m] ASL (" + z_asl_max + " [m] AGL) at t = " + z_max_t + " [s] ");
 
 % maximums (z_dot, mach)
 z_dot_max = max(r_z_dot);
 z_dot_max_idx = find(r_z_dot==z_dot_max);
 z_dot_max_t = r_time(z_dot_max_idx);
-z_dot_agl_max = max(r_z_dot);
 disp("Max Velocity of " + z_dot_max + " [m/s] at t = " + z_dot_max_t + " [s] ");
