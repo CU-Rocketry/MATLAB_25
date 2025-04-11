@@ -115,10 +115,8 @@ while bool_cont
     Fd = drag_force(drag_curve, speed, frontal_area, a, rho);% gvign nan
     %disp(Fd)
 
-    if z_dot > 0
-        % drag is opposite the velocity vector
-        Fd = -1 * Fd;
-    end
+    % drag is opposite the velocity vector
+    Fd = -1 * direction * Fd;
 
     % Motor Thrust and Mass
     if t >= 0 && t <= motor_burn_time
