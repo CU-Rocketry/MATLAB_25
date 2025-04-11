@@ -228,8 +228,8 @@ fig_transform = figure;
 set(fig_transform, 'Units', 'Normalized', 'OuterPosition', [0, 0.25, 0.5, 0.75]);
 
 subplot(3,1,1);
-% plot(r_time, r_z); % ASL altitude
-plot(r_time, r_z_asl);
+plot(r_time, r_z); % AGL altitude
+% plot(r_time, r_z_asl); % ASL altitude
 title("Altitude vs Time");
 xlabel("Time [s]");
 ylabel("Altitude [m]");
@@ -279,12 +279,11 @@ disp("Burnout occurs at " + burnout_t + " [s] when Altitude = " + burnout_z + " 
 z_max = max(r_z);
 z_max_idx = find(r_z==z_max);
 z_max_t = r_time(z_max_idx);
-z_agl_max = max(r_z_asl);
-disp("Apogee of " + z_max + " [m] ASL (" + z_agl_max + " [m] AGL) at t = " + z_max_t + " [s] ");
+z_asl_max = max(r_z_asl);
+disp("Apogee of " + z_max + " [m] ASL (" + z_asl_max + " [m] AGL) at t = " + z_max_t + " [s] ");
 
 % maximums (z_dot, mach)
 z_dot_max = max(r_z_dot);
 z_dot_max_idx = find(r_z_dot==z_dot_max);
 z_dot_max_t = r_time(z_dot_max_idx);
-z_dot_agl_max = max(r_z_dot);
 disp("Max Velocity of " + z_dot_max + " [m/s] at t = " + z_dot_max_t + " [s] ");
