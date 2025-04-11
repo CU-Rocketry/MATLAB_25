@@ -26,6 +26,7 @@ frontal_area = 0.013439; % [m^2] from RASAero, units converted
 
 rail_length = 5.6; % [m]
 rail_angle = 5; % [degrees] angle off of vertical
+rail_angle_horizontal = deg2rad(90 - rail_angle); % [rad] angle off of horizontal
 
 %% Drag
 % drag_curve = readmatrix("drag_curve.csv"); % col 1 - mach #, col 2 - Cd
@@ -39,7 +40,7 @@ dT = 0.005;       % [s]
 
 % position vector [z, s] represents altitude, downrange
 % initial conditions
-position = [pad_altitude, 0]; % [m]
+position = [pad_altitude, 0]; % [m] AGL, downrange
 velocity = [0, 0]; % [m/s]
 acceleration = [0, 0]; % [m/s]
 
