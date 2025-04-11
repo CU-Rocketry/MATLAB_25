@@ -113,7 +113,7 @@ while bool_cont
   if event_launch_rail_departure == true
     direction = velocity ./ speed;
   else
-    direction = [sin(rail_angle_horiziontal),cos(rail_angle_horiziontal)];
+    direction = [sin(rail_angle_horizontal),cos(rail_angle_horizontal)];
   end
 
   
