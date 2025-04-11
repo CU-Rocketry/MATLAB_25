@@ -108,7 +108,14 @@ while bool_cont
   % disp([T, a, P, rho]);
 
   speed = norm(velocity);
-  direction = velocity ./ speed;
+
+  if event_launch_rail_departure == true
+    direction = velocity ./ speed;
+  else
+    direction = [sin(rail_angle_horiziontal),cos(rail_angle_horiziontal)];
+  end
+
+  
 
 %% Calculate forces and z_dot_dot
     % Atmospheric Drag
@@ -129,10 +136,10 @@ while bool_cont
 
     % Weight
     M = M_dry + motor_mass;
-    W = M*g;
+    W = (M*g)*direction;
 
     % Solve governing eqn for z_dot_dot
-    z_dot_dot = (Th + Fd - W)/M;
+    acceleration = (Th(1) + Fd(1) - W(1))./M;
 
     % Calculate any other additional parameters
     mach = speed / a;
