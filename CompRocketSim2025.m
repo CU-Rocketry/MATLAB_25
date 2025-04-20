@@ -301,7 +301,7 @@ z_max = max(r_position(:,1));
 z_max_idx = find(r_position(:,1)==z_max);
 z_max_t = r_time(z_max_idx);
 z_asl_max = max(r_z_asl);
-disp("Apogee of " + z_max + " [m] ASL (" + z_asl_max + " [m] AGL) at t = " + z_max_t + " [s] ");
+disp("Apogee of " + z_asl_max + " [m] ASL (" + z_max + " [m] AGL) at t = " + z_max_t + " [s] ");
 
 % maximums (z_dot, mach)
 z_dot_max = max(r_velocity(:,1));
