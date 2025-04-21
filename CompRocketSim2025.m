@@ -308,3 +308,43 @@ z_dot_max = max(r_velocity(:,1));
 z_dot_max_idx = find(r_velocity(:,1)==z_dot_max);
 z_dot_max_t = r_time(z_dot_max_idx);
 disp("Max Velocity of " + z_dot_max + " [m/s] at t = " + z_dot_max_t + " [s] ");
+
+%% Load Reference Data and Plot to Compare
+% These are all copy pastes from last year's sim- just for sintax reference
+%or_data = readtable(fullfile('or_sim_data', 'all_data_4.csv'));
+%or_time = table2array(or_data(:,"x_Time_s_"))';
+%or_z = table2array(or_data(:, "Altitude_m_"))';
+%or_z_dot = table2array(or_data(:, "TotalVelocity_m_s_"))';
+%or_z_dot_dot = table2array(or_data(:, "TotalAcceleration_m_s__"))';
+%or_mass = table2array(or_data(:, "Mass_g_"))';
+%or_thrust = table2array(or_data(:, "Thrust_N_"))';
+%or_drag_coefficient = table2array(or_data(:, "DragCoefficient___"))';
+%or_drag_force = table2array(or_data(:, "DragForce_N_"))';
+%or_motor_mass = table2array(or_data(:, "MotorMass_g_"))';
+%or_speed_of_sound = table2array(or_data(:,"SpeedOfSound_m_s_"))';
+%or_mach = table2array(or_data(:,"MachNumber___"))';
+%or_pressure = table2array(or_data(:,"AirPressure_mbar_"))';
+or_z = table2array(OR_alt(:,:));
+
+%% Plot Our values and O.R. Values over each other
+    % position
+    figure(1)
+    plot(time, r_z_asl, or_z)
+    title('Position AGL (m)')
+    ylabel('Position (m)')
+    xlabel('Time (s)')
+    legend("3 DoF", "OpenRocket")
+
+    % velocity
+    %figure(2)
+    %plot(time, r_z_dot, or_time, or_z_dot)
+    %title('Velocity (m/s)')
+    %ylabel('Velocity (m/s)')
+    %xlabel('Time (s)')
+    %legend("1 DoF", "OpenRocket")
+
+    % acceleration
+    %figure(3)
+    %plot(time, abs(r_z_dot_dot), or_time, or_z_dot_dot)
+    %title('Acceleration (m/s^2)')
+    %legend("1 DoF", "OpenRocket")
