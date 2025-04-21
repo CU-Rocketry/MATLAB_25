@@ -8,7 +8,7 @@ addpath("RASAero\");
 
 %% Variables
 
-M_dry = 23.8;                         % [kg] Dry mass of rocket
+M_dry = 23.7;                         % [kg] Dry mass of rocket
 
 motor_fname = "AeroTech_M2500T.rse";    %'thrust_curves/AeroTech_M2500T.rse'
 motor_wet_mass = 8.108;                 % [kg] Mass with no fuel
