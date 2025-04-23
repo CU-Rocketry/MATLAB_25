@@ -3,10 +3,10 @@ function drag_curve = approx_drag_curve(rasaero_data, frontal_area)
 
     cd_curve = [rasaero_data(1:max_mach*100,1),rasaero_data(1:max_mach*100,3)];
     
-    % figure;
-    % plot(cd_curve(:,1), cd_curve(:,2));
-    % xlabel("Mach number");
-    % ylabel("Drag Coefficient");
+    figure;
+    plot(cd_curve(:,1), cd_curve(:,2));
+    xlabel("Mach number");
+    ylabel("Drag Coefficient");
     
     % Fitting
     % index 1 to 4 quad
@@ -47,32 +47,13 @@ function drag_curve = approx_drag_curve(rasaero_data, frontal_area)
     % disp(f_drag);
     
     % uncomment to plot approximated drag curve
-    %{
-    figure;
     hold on;
-    plot(cd_curve(:,1), cd_curve(:,2), "r.", "MarkerSize",10); % plot original
-    fplot(y,'b', "LineWidth",1); % plot regression
+    %plot(cd_curve(:,1), cd_curve(:,2), "r.", "MarkerSize",10); % plot original
+    plot(cd_curve(:,1), drag_curve(cd_curve(:,1)), "r");
     legend("Original", "Regression");
     xlabel("Mach number");
     ylabel("Drag Coefficient");
     grid on;
     xlim([0,2]);
     ylim([0.4,0.65]);
-    %}
-    
-    % coeffs = polyfit(cd_curve(:,1), cd_curve(:,2),10);
-    % y = polyval(coeffs,cd_curve(:,1));
-    % figure;
-    % hold on;
-    %plot(cd_curve(:,1), y);
-    % plot(mach,y1);
-    % plot(mach,y2);
-    % plot(mach,y3);
-    % plot(mach,y4);
-    
-    % xlabel("Mach number");
-    % ylabel("Drag Coefficient");
-    % 
-    % xlim([0,1.5])
-    % ylim([0.4,0.65])
 end
