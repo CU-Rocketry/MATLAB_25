@@ -313,8 +313,9 @@ disp("Max Velocity of " + z_dot_max + " [m/s] at t = " + z_dot_max_t + " [s] ");
 
 % These are all copy pastes from last year's sim- just for sintax reference
 
-or_z = readmatrix('OR_alt.csv');
-or_t = readmatrix('OR_t.csv');
+or_alt_csv = readmatrix('OR_alt.csv');
+or_t = or_alt_csv(:,1);
+or_z = or_alt_csv(:,2);
 
 %or_data = readtable(fullfile('or_sim_data', 'all_data_4.csv'));
 %or_time = table2array(or_data(:,"x_Time_s_"))';
@@ -332,12 +333,14 @@ or_t = readmatrix('OR_t.csv');
 
 %% Plot Our values and O.R. Values over each other
     % position
-    figure(3)
-    plot(r_time, r_position(:,1), or_t, or_z)
-    title('Position AGL (m)')
-    ylabel('Position (m)')
-    xlabel('Time (s)')
-    legend("3 DoF", "OpenRocket")
+    figure(3);
+    hold on;
+    plot(r_time, r_position(:,1));
+    plot(or_t, or_z);
+    title('Position AGL (m)');
+    ylabel('Position (m)');
+    xlabel('Time (s)');
+    legend("3 DoF", "OpenRocket");
 
     % velocity
     %figure(2)
