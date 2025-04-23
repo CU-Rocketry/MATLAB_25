@@ -310,7 +310,12 @@ z_dot_max_t = r_time(z_dot_max_idx);
 disp("Max Velocity of " + z_dot_max + " [m/s] at t = " + z_dot_max_t + " [s] ");
 
 %% Load Reference Data and Plot to Compare
+
 % These are all copy pastes from last year's sim- just for sintax reference
+
+or_z = readmatrix('OR_alt.csv');
+or_t = readmatrix('OR_t.csv');
+
 %or_data = readtable(fullfile('or_sim_data', 'all_data_4.csv'));
 %or_time = table2array(or_data(:,"x_Time_s_"))';
 %or_z = table2array(or_data(:, "Altitude_m_"))';
@@ -324,8 +329,6 @@ disp("Max Velocity of " + z_dot_max + " [m/s] at t = " + z_dot_max_t + " [s] ");
 %or_speed_of_sound = table2array(or_data(:,"SpeedOfSound_m_s_"))';
 %or_mach = table2array(or_data(:,"MachNumber___"))';
 %or_pressure = table2array(or_data(:,"AirPressure_mbar_"))';
-or_z = readmatrix('OR_alt.csv');
-or_t = readmatrix('OR_t.csv');
 
 %% Plot Our values and O.R. Values over each other
     % position
