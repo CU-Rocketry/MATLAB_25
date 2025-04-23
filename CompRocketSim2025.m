@@ -324,13 +324,13 @@ disp("Max Velocity of " + z_dot_max + " [m/s] at t = " + z_dot_max_t + " [s] ");
 %or_speed_of_sound = table2array(or_data(:,"SpeedOfSound_m_s_"))';
 %or_mach = table2array(or_data(:,"MachNumber___"))';
 %or_pressure = table2array(or_data(:,"AirPressure_mbar_"))';
-or_z = 'OR_alt.csv';
-or_t = 'OR_t.csv';
+or_z = readmatrix('OR_alt.csv');
+or_t = readmatrix('OR_t.csv');
 
 %% Plot Our values and O.R. Values over each other
     % position
-    figure(1)
-    plot(t, r_z_asl, or_t, or_z)
+    figure(3)
+    plot(r_time, r_position(:,1), or_t, or_z)
     title('Position AGL (m)')
     ylabel('Position (m)')
     xlabel('Time (s)')
