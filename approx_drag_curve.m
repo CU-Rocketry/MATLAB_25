@@ -45,6 +45,8 @@ function drag_curve = approx_drag_curve(rasaero_data, frontal_area)
     % example usage of drag_force:
     % f_drag = drag_force(y,200,frontal_area, a, rho);
     % disp(f_drag);
+
+    
     
     % uncomment to plot approximated drag curve
     hold on;
@@ -56,4 +58,13 @@ function drag_curve = approx_drag_curve(rasaero_data, frontal_area)
     grid on;
     xlim([0,2]);
     ylim([0.4,0.65]);
+
+    % for comparison to OR
+    or_drag_csv = readmatrix('OR_drag.csv');
+    or_drag_mach = or_drag_csv(:,1);
+    or_drag_cd = or_drag_csv(:,2);
+
+    plot(or_drag_mach, or_drag_cd);
+    legend("Original", "Regression", "OpenRocket");
+    hold off;
 end

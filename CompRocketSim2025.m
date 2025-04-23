@@ -333,7 +333,7 @@ or_z = or_alt_csv(:,2);
 
 %% Plot Our values and O.R. Values over each other
     % position
-    figure(3);
+    figure;
     hold on;
     plot(r_time, r_position(:,1));
     plot(or_t, or_z);
